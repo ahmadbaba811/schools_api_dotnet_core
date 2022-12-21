@@ -13,12 +13,15 @@ namespace schools_api_core.Controllers
         private readonly schoolDbContext  _context;
         public StaffController(schoolDbContext context) => _context = context;
 
+        //GET ALL STAFF LIST
         [HttpGet("staff-list")]
         public async Task<IEnumerable<TblStaff>> Get()
         {
             return await _context.TblStaffs.ToListAsync();
         }
 
+        
+        //GET STAFF BY ROW ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetStaffByID(int id)
         {
@@ -26,16 +29,27 @@ namespace schools_api_core.Controllers
             return staff == null ? NotFound() : Ok(staff);
         }
 
+        //GET STAFF BY STAFF ID
+        [HttpGet("by-staff-id/{staff_id}")]
+        public async Task<IActionResult> GetStaffByStaffID(string staff_id)
+        {
+            var staff = await _context.TblStaffs.Where(x => x.StaffId == staff_id).FirstOrDefaultAsync();
+            return staff == null ? NotFound() : Ok(staff);
+        }
 
+
+        //ADD NEW STAFF RECORD
         [HttpPost("add-staff")]
         public async Task<IActionResult> CreateStaff(TblStaff staff)
         {
             await _context.TblStaffs.AddAsync(staff);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetStaffByID), new { staffid = staff.StaffId }, staff);
+            return CreatedAtAction(nameof(GetStaffByID), new { id = staff.Id }, staff);
         }
 
+
+        //UPDATE STAFF BY ROW ID
         [HttpPut("update-staff/{id}")]
         public async Task<IActionResult> UpdateStaff(int id, TblStaff staff)
         {
@@ -47,6 +61,8 @@ namespace schools_api_core.Controllers
             return NoContent();
         }
 
+
+        //UPDATE STAFF NAMES WITH ROW ID
         [HttpPut("update-staff-name/{id}")]
         public async Task<IActionResult> UpdateStaffName(int id, TblStaff staff)
         {
@@ -63,7 +79,9 @@ namespace schools_api_core.Controllers
             return Ok();
         }
 
-        [HttpDelete("remove-staff/{id}")]
+
+        //DELETE STAFF RECORD WITH ROW ID
+        [HttpDelete("delete-staff/{id}")]
         public async Task<IActionResult> RemoveStaff(int id, TblStaff staff)
         {
             if(id != staff.Id) return BadRequest();
@@ -72,6 +90,8 @@ namespace schools_api_core.Controllers
             return Ok();
         }
 
+
+        //ASSIGN NEW FORM MASTER TO CLASS
         [HttpPost("assign-form-master")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -88,6 +108,40 @@ namespace schools_api_core.Controllers
             return Ok();
         }
 
+
+        //DELETE FORM MASTER BY ROW ID
+        [HttpDelete("delete-form-master/{id}")]
+        public async Task<IActionResult> DeleteFormMaster(int id, TblFormMaster formmaster)
+        {
+            var formMasterToDelete = await _context.TblFormMasters.FindAsync(id);
+
+            if (formMasterToDelete == null) return BadRequest();
+
+            _context.TblFormMasters.Remove(formMasterToDelete);
+            await _context.SaveChangesAsync();
+            return Ok("deleted");
+        }
+
+
+        //ALL FORM MASTERS LIST
+        [HttpGet("form-masters/list")]
+        public async Task<IActionResult> GetFormMasters()
+        {
+            var formmasters = await _context.TblFormMasters.ToListAsync();
+            return Ok(formmasters);
+        }
+
+
+        //ALL FORM MASTERS LIST
+        [HttpGet("form-masters/list/{staff_id}")]
+        public async Task<IActionResult> GetFormMastersByStaffID(string staff_id)
+        {
+            var formmaster = await _context.TblFormMasters.Where(x => x.StaffId == staff_id).ToListAsync();
+            return Ok(formmaster);
+        }
+
+
+        //ASSIGN SUBJECT TO TEACHER
         [HttpPost("assign-subject-teacher")]
         public async Task<IActionResult> AssignSubjectTeacher(TblAssignTeacher teacher)
         {
@@ -104,16 +158,63 @@ namespace schools_api_core.Controllers
             return Ok();
         }
 
-        [HttpDelete("delete-form-master/{id}")]
-        public async Task<IActionResult> DeleteFormMaster(int id, TblFormMaster formmaster)
+
+        //DELETE SUBJECT TEACHER ASSIGNMENT
+        [HttpDelete("delete-subject-teacher/{id}")]
+        public async Task<IActionResult> DeleteSubjectTeacher(int id, TblAssignTeacher teacher)
         {
-            var formMasterToDelete = await _context.TblFormMasters.FindAsync(id);
+            var teacherToDelete = await _context.TblAssignTeachers.FindAsync(id);
 
-            if (formMasterToDelete == null ) return BadRequest();
+            if (teacherToDelete == null) return BadRequest();
 
-            _context.TblFormMasters.Remove(formMasterToDelete);
+            _context.TblAssignTeachers.Remove(teacherToDelete);
             await _context.SaveChangesAsync();
             return Ok("deleted");
         }
+
+
+        //ALL SUBJECT TEACHERS LIST
+        [HttpGet("subject-teachers/list")]
+        public async Task<IActionResult> GetSubjectTeachers()
+        {
+            var teachers = await _context.TblAssignTeachers.ToListAsync();
+            return Ok(teachers);
+        }
+
+
+        //ALL SUBJECT TEACHERS LIST
+        [HttpGet("subject-teachers/list/{staff_id}")]
+        public async Task<IActionResult> GetSubjectTeachersByStaffID(string staff_id)
+        {
+            var teachers = await _context.TblAssignTeachers.Where(x => x.StaffId == staff_id).ToListAsync();
+            return Ok(teachers);
+        }
+
+
+        //GET ACTIVITIES BY STAFF ID
+        [HttpGet("staff-activities")]
+        public async Task<IActionResult> GetStaffActivities()
+        {
+            var activites = await _context.TblStaffActivities.ToListAsync();
+            return Ok(activites);
+        }
+
+        //GET ACTIVITIES BY STAFF ID
+        [HttpGet("staff-activities/{staff_id}")]
+        public async Task<IActionResult> GetStaffActivitiesByStaffID(string staff_id)
+        {
+            var activites = await _context.TblStaffActivities.Where(x => x.StaffId == staff_id).ToListAsync();
+            return Ok(activites);
+        }
+
+        //ADD STAFF ACTIVITIES
+        [HttpPost("add-staff-activity")]
+        public async Task<IActionResult> PostNewActivity(TblStaffActivity activity)
+        {
+            var nee_activity = _context.TblStaffActivities.AddAsync(activity);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetStaffActivitiesByStaffID), new { staff_id = activity.StaffId }, activity);
+        }
+
     }
 }

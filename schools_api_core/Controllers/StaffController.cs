@@ -33,7 +33,7 @@ namespace schools_api_core.Controllers
             await _context.TblStaffs.AddAsync(staff);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetStaffByID), new { staffid = staff.StaffId }, staff);
+            return CreatedAtAction(nameof(GetStaffByID), new { id = staff.Id }, staff);
         }
 
         [HttpPut("update-staff/{id}")]

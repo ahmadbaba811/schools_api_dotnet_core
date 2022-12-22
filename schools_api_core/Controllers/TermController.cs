@@ -97,7 +97,7 @@ namespace schools_api_core.Controllers
                 tt.DateAdded = term.DateAdded;
                 await _context.SaveChangesAsync();
             }
-            return Ok("updated");
+            return Ok("updateds");
         }
     }
 }

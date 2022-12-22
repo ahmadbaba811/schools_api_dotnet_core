@@ -31,10 +31,10 @@ namespace schools_api_core.Controllers
         }
 
         //GET TERM BY TERM NAME
-        [HttpPost("term-by-name")]
-        public async Task<IActionResult> GetTermByName(TblTerm se)
+        [HttpPost("term-by-name/{term_name}")]
+        public async Task<IActionResult> GetTermByName(string term_name)
         {
-            var term = await _context.TblTerms.Where(x => x.TermName == se.TermName).FirstOrDefaultAsync();
+            var term = await _context.TblTerms.Where(x => x.TermName == term_name).FirstOrDefaultAsync();
             if (term == null) return BadRequest("no record");
             return Ok(term);
         }

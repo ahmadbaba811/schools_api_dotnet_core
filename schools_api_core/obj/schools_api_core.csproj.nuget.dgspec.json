@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\.NETprojects\\schools_api_core\\schools_api_core\\schools_api_core.csproj": {}
+    "C:\\ahmad-baba\\schools_api_dotnet_core\\schools_api_core\\schools_api_core.csproj": {}
   },
   "projects": {
-    "C:\\.NETprojects\\schools_api_core\\schools_api_core\\schools_api_core.csproj": {
+    "C:\\ahmad-baba\\schools_api_dotnet_core\\schools_api_core\\schools_api_core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\.NETprojects\\schools_api_core\\schools_api_core\\schools_api_core.csproj",
+        "projectUniqueName": "C:\\ahmad-baba\\schools_api_dotnet_core\\schools_api_core\\schools_api_core.csproj",
         "projectName": "schools_api_core",
-        "projectPath": "C:\\.NETprojects\\schools_api_core\\schools_api_core\\schools_api_core.csproj",
-        "packagesPath": "C:\\Users\\ahmad\\.nuget\\packages\\",
-        "outputPath": "C:\\.NETprojects\\schools_api_core\\schools_api_core\\obj\\",
+        "projectPath": "C:\\ahmad-baba\\schools_api_dotnet_core\\schools_api_core\\schools_api_core.csproj",
+        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+        "outputPath": "C:\\ahmad-baba\\schools_api_dotnet_core\\schools_api_core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ahmad\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -78,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

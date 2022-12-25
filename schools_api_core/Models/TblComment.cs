@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace schools_api_core.Models;
 
-[Table("tbl_student_behavior")]
-public partial class TblStudentBehavior
+[Table("tbl_comments")]
+public partial class TblComment
 {
     [Key]
     [Column("id")]
@@ -33,15 +33,16 @@ public partial class TblStudentBehavior
     [Unicode(false)]
     public string? SessionId { get; set; }
 
-    [Column("behaviour")]
-    [StringLength(50)]
+    [Column("form_master_comment")]
     [Unicode(false)]
-    public string? Behaviour { get; set; }
+    public string? FormMasterComment { get; set; }
 
-    [Column("score")]
-    [StringLength(50)]
+    [Column("principal_comment")]
     [Unicode(false)]
-    public string? Score { get; set; }
+    public string? PrincipalComment { get; set; }
+
+    [Column("promotion")]
+    public bool? Promotion { get; set; }
 
     [Column("date_added", TypeName = "datetime")]
     public DateTime? DateAdded { get; set; }

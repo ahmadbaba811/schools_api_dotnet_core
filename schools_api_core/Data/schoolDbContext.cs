@@ -38,6 +38,8 @@ public partial class schoolDbContext : DbContext
 
     public virtual DbSet<TblPromotion> TblPromotions { get; set; }
 
+    public virtual DbSet<TblResultComment> TblResultComments { get; set; }
+
     public virtual DbSet<TblRole> TblRoles { get; set; }
 
     public virtual DbSet<TblSession> TblSessions { get; set; }
@@ -76,7 +78,7 @@ public partial class schoolDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-RK4H6L4\\SA;Initial Catalog=schooldb_a121w;User ID=sa;Password=a; Encrypt= false");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-NL26F2F\\SQL_SERVER;Initial Catalog=schooldb_a121w;User ID=sa;Password=a; Encrypt= false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -138,6 +140,11 @@ public partial class schoolDbContext : DbContext
 
             entity.Property(e => e.DateAdded).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.PrevClassId).IsFixedLength();
+        });
+
+        modelBuilder.Entity<TblResultComment>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_tbl_comments");
         });
 
         modelBuilder.Entity<TblSession>(entity =>

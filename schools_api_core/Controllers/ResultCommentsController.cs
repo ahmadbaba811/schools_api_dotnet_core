@@ -64,5 +64,17 @@ namespace schools_api_core.Controllers
             await _context.SaveChangesAsync();
             return Ok("deleted");
         }
+
+        //UPDATE RESULT COMMENT BY ROW ID
+        [HttpPut("update-result-comment/{id}")]
+        public async Task<IActionResult> UpdatePComment(int id, TblResultComment score)
+        {
+            if (id != score.Id) return BadRequest("no result");
+
+            _context.Entry(score).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Ok("updated");
+        }
     }
 }

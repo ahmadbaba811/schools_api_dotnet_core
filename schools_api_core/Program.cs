@@ -15,7 +15,7 @@ builder.Services.AddDbContext<schoolDbContext>(o => o.UseSqlServer(builder.Confi
 
 builder.Services.AddCors(p => p.AddPolicy("schCors", x =>
 {
-    x.WithOrigins("*").AllowAnyOrigin().AllowAnyHeader();
+    x.WithOrigins("*").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
 }));
 
 var app = builder.Build();

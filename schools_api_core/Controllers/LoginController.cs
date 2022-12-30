@@ -31,6 +31,9 @@ namespace schools_api_core.Controllers
             Random generator = new Random();
             var _random = generator.Next(0, 1000000000).ToString("D9");
             var _staff = await _context.TblStaffs.Where(x => x.Email == StaffId || x.StaffId == StaffId).FirstOrDefaultAsync();
+
+            var _staff_ = await _context.TblStaffs.Where(x => x.Email == StaffId || x.StaffId == StaffId).ToListAsync();
+
             if (_staff == null) return NotFound("wrong email");
 
             if (_staff != null)
@@ -40,7 +43,7 @@ namespace schools_api_core.Controllers
                 {
                     if(_pwd == Password)
                     {
-                        var commandText = "INSERT INTO tbl_login (user_id, session_id, status, login_date, ip_address, location) VALUES ('"+login.UserId+ "', '"+_random+"', '1', '"+Convert.ToDateTime(DateTime.Now)+"', '"+login.IpAddress + "', '" + login.Location + "' ) ";
+                        var commandText = "INSERT INTO tbl_login (user_id, session_id, status, login_date, ip_address, location) VALUES ('"+login.UserId+ "', '"+_random+"', '1', '"+Convert.ToDateTime(DateTime.Now).ToString()+"', '"+login.IpAddress + "', '" + login.Location + "' ) ";
                         int x = _context.Database.ExecuteSqlRaw(commandText);
 
                         var res = new
@@ -49,11 +52,11 @@ namespace schools_api_core.Controllers
                             staff = _staff
                         };
 
-                        return Ok(_staff);
+                        return Ok(_staff_);
                     }
                     else
                     {
-                        var commandText = "INSERT INTO tbl_login (user_id, session_id, status, login_date, ip_address, location) VALUES ('" + login.UserId + "', '" + _random + "', '0', '" + Convert.ToDateTime(DateTime.Now) + "', '" + login.IpAddress + "', '" + login.Location + "' ) ";
+                        var commandText = "INSERT INTO tbl_login (user_id, session_id, status, login_date, ip_address, location) VALUES ('" + login.UserId + "', '" + _random + "', '0', '" + Convert.ToDateTime(DateTime.Now).ToString() + "', '" + login.IpAddress + "', '" + login.Location + "' ) ";
                         int x = _context.Database.ExecuteSqlRaw(commandText);
 
                         return BadRequest("wrong credentials");

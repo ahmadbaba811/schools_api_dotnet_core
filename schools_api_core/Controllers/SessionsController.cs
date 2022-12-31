@@ -56,9 +56,12 @@ namespace schools_api_core.Controllers
             if (exisitingSeession != null) return BadRequest("session name already exists");
 
             var activeSession = _context.TblSessions.Where(x => x.Status == "1").FirstOrDefault();
-            if(activeSession?.Status == se.Status)
+            if(activeSession != null)
             {
-                return BadRequest("active session already exists");
+                if (activeSession?.Status == se.Status)
+                {
+                    return BadRequest("active session already exists");
+                }
             }
 
             await _context.TblSessions.AddAsync(se);

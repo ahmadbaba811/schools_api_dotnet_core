@@ -95,6 +95,8 @@ public partial class schoolDbContext : DbContext
         modelBuilder.Entity<TblClass>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_classes");
+
+            entity.Property(e => e.DateAdded).HasDefaultValueSql("(getdate())");
         });
 
         modelBuilder.Entity<TblDesignation>(entity =>

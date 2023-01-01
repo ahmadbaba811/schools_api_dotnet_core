@@ -43,7 +43,7 @@ namespace schools_api_core.Controllers
         [HttpGet("active-session")]
         public async Task<IActionResult> GetActiveSession()
         {
-            var session = await _context.TblSessions.Where(x => x.Status == "1").FirstOrDefaultAsync();
+            var session = await _context.TblSessions.Where(x => x.Status == "1").ToListAsync();
             if (session == null) return BadRequest("no record");
             return Ok(session);
         }

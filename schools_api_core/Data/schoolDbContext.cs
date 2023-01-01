@@ -107,6 +107,8 @@ public partial class schoolDbContext : DbContext
         modelBuilder.Entity<TblFormMaster>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_FormMasters");
+
+            entity.Property(e => e.DateAdded).HasDefaultValueSql("(getdate())");
         });
 
         modelBuilder.Entity<TblLogin>(entity =>

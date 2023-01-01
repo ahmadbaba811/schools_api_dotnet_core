@@ -18,40 +18,15 @@ public partial class TblFormMaster
     [Unicode(false)]
     public string? StaffId { get; set; }
 
-    [Column("full_name")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? FullName { get; set; }
-
-    [Column("email")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? Email { get; set; }
-
-    [Column("designation")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? Designation { get; set; }
-
     [Column("class_id")]
     [StringLength(50)]
     [Unicode(false)]
     public string? ClassId { get; set; }
 
-    [Column("class_name")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? ClassName { get; set; }
-
     [Column("session_id")]
     [StringLength(50)]
     [Unicode(false)]
     public string? SessionId { get; set; }
-
-    [Column("session_name")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? SessionName { get; set; }
 
     [Column("added_by")]
     [StringLength(50)]

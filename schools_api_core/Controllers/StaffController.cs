@@ -33,7 +33,7 @@ namespace schools_api_core.Controllers
         [HttpGet("by-staff-id/{staff_id}")]
         public async Task<IActionResult> GetStaffByStaffID(string staff_id)
         {
-            var staff = await _context.TblStaffs.Where(x => x.StaffId == staff_id).FirstOrDefaultAsync();
+            var staff = await _context.TblStaffs.Where(x => x.StaffId == staff_id).ToListAsync();
             return staff == null ? NotFound() : Ok(staff);
         }
 
@@ -42,10 +42,14 @@ namespace schools_api_core.Controllers
         [HttpPost("add-staff")]
         public async Task<IActionResult> CreateStaff(TblStaff staff)
         {
+            var _stf = await _context.TblStaffs
+                .Where(x => x.Email == staff.Email || x.Phone == staff.Phone).FirstOrDefaultAsync();
+            if (_stf != null) return BadRequest("staff with this email or phone exists");
+
             await _context.TblStaffs.AddAsync(staff);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetStaffByID), new { id = staff.Id }, staff);
+            return Ok("success");
         }
 
 
@@ -58,10 +62,10 @@ namespace schools_api_core.Controllers
             _context.Entry(staff).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("success");
         }
 
-
+            
         //UPDATE STAFF NAMES WITH ROW ID
         [HttpPut("update-staff-name/{id}")]
         public async Task<IActionResult> UpdateStaffName(int id, TblStaff staff)
@@ -100,26 +104,29 @@ namespace schools_api_core.Controllers
             var existingFormMaster = await _context.TblFormMasters.Where(x => x.StaffId == formmaster.StaffId && x.ClassId == formmaster.ClassId && x.SessionId == formmaster.SessionId).FirstOrDefaultAsync();
             if (existingFormMaster != null) return BadRequest("staff already assigned");
 
+            var existingFormMasterinSession = await _context.TblFormMasters.Where(x => x.StaffId == formmaster.StaffId &&  x.SessionId == formmaster.SessionId).FirstOrDefaultAsync();
+            if (existingFormMasterinSession != null) return BadRequest("staff already assigned in this session");
+
             var existingAssignedClass = await _context.TblFormMasters.Where(x => x.ClassId == formmaster.ClassId && x.SessionId == formmaster.SessionId).FirstOrDefaultAsync();
             if (existingAssignedClass != null) return BadRequest("class already assigned");
 
             await _context.TblFormMasters.AddAsync(formmaster);
             await _context.SaveChangesAsync();
-            return Ok();
+            return Ok("success");
         }
 
 
         //DELETE FORM MASTER BY ROW ID
         [HttpDelete("delete-form-master/{id}")]
-        public async Task<IActionResult> DeleteFormMaster(int id, TblFormMaster formmaster)
+        public async Task<IActionResult> DeleteFormMaster(int id)
         {
             var formMasterToDelete = await _context.TblFormMasters.FindAsync(id);
 
-            if (formMasterToDelete == null) return BadRequest();
+            if (formMasterToDelete == null) return BadRequest("no record");
 
             _context.TblFormMasters.Remove(formMasterToDelete);
             await _context.SaveChangesAsync();
-            return Ok("deleted");
+            return Ok("success");
         }
 
 

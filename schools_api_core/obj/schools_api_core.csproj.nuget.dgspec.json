@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\.NETprojects\\schools_api_core\\schools_api_core\\schools_api_core.csproj": {}
+    "C:\\School_Api_dotnet - Copy\\schools_api_core\\schools_api_core.csproj": {}
   },
   "projects": {
-    "C:\\.NETprojects\\schools_api_core\\schools_api_core\\schools_api_core.csproj": {
+    "C:\\School_Api_dotnet - Copy\\schools_api_core\\schools_api_core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\.NETprojects\\schools_api_core\\schools_api_core\\schools_api_core.csproj",
+        "projectUniqueName": "C:\\School_Api_dotnet - Copy\\schools_api_core\\schools_api_core.csproj",
         "projectName": "schools_api_core",
-        "projectPath": "C:\\.NETprojects\\schools_api_core\\schools_api_core\\schools_api_core.csproj",
-        "packagesPath": "C:\\Users\\ahmad\\.nuget\\packages\\",
-        "outputPath": "C:\\.NETprojects\\schools_api_core\\schools_api_core\\obj\\",
+        "projectPath": "C:\\School_Api_dotnet - Copy\\schools_api_core\\schools_api_core.csproj",
+        "packagesPath": "C:\\Users\\JUBRIL\\.nuget\\packages\\",
+        "outputPath": "C:\\School_Api_dotnet - Copy\\schools_api_core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ahmad\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\JUBRIL\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -56,7 +56,7 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.2.3, )"
+              "version": "[6.4.0, )"
             }
           },
           "imports": [

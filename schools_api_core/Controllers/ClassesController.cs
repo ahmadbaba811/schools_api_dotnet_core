@@ -18,7 +18,7 @@ namespace schools_api_core.Controllers
         [HttpGet("class-list")]
         public async Task<IActionResult> Get()
         {
-            var classes = await _context.TblClasses.ToListAsync();
+            var classes = await _context.TblClasses.OrderBy(x => x.ClassName).ToListAsync();
             return Ok(classes);
         }
 

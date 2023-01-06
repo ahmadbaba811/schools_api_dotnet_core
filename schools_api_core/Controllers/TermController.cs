@@ -18,7 +18,7 @@ namespace schools_api_core.Controllers
         [HttpGet("terms-list")]
         public async Task<IEnumerable<TblTerm>> Get()
         {
-            return await _context.TblTerms.OrderByDescending(x => x.EndDate).ToListAsync();
+            return await _context.TblTerms.OrderBy(x => x.EndDate).ToListAsync();
         }
 
         //GET ALL TERM BY ROW ID
@@ -93,7 +93,17 @@ namespace schools_api_core.Controllers
                 var activeTerm = await _context.TblTerms.Where(x => x.Status == "1").FirstOrDefaultAsync();
                 if (activeTerm != null)
                 {
-                    var _update = "UPDATE tbl_term SET status = '0' where id != '" + id + "' ";
+                    var _update = "UPDATE tbl_term SET status = '0' where id != '" + id + "' AND status != '2' ";
+                    int x = _context.Database.ExecuteSqlRaw(_update);
+                }
+            }
+
+            if (term.Status == "2")
+            {
+                var activeTerm = await _context.TblTerms.Where(x => x.Status == "2").FirstOrDefaultAsync();
+                if (activeTerm != null)
+                {
+                    var _update = "UPDATE tbl_term SET status = '0' where id != '" + id + "' AND status != '1' ";
                     int x = _context.Database.ExecuteSqlRaw(_update);
                 }
             }

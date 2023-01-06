@@ -30,4 +30,7 @@ public partial class TblClass
 
     [Column("date_added", TypeName = "date")]
     public DateTime? DateAdded { get; set; }
+
+    [Column("promotion")]
+    public bool? Promotion { get; set; }
 }

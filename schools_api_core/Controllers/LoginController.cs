@@ -63,7 +63,7 @@ namespace schools_api_core.Controllers
                     }
                 }
             }
-            return BadRequest("no staff");
+            return BadRequest("no staff record");
         }
     }
 }

@@ -68,6 +68,11 @@ public partial class TblStaff
     [Unicode(false)]
     public string? Designation { get; set; }
 
+    [Column("class")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? Class { get; set; }
+
     [Column("date_of_birth", TypeName = "date")]
     public DateTime? DateOfBirth { get; set; }
 
@@ -88,9 +93,7 @@ public partial class TblStaff
     public string? Passport { get; set; }
 
     [Column("status")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? Status { get; set; }
+    public bool? Status { get; set; }
 
     [Column("password")]
     [Unicode(false)]

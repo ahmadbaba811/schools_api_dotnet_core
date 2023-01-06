@@ -91,7 +91,17 @@ namespace schools_api_core.Controllers
                 var activeSession = await _context.TblSessions.Where(x => x.Status == "1").ToListAsync();
                 if (activeSession != null)
                 {
-                    var _update = "UPDATE tbl_session SET status = '0' where id != '"+id+"' ";
+                    var _update = "UPDATE tbl_session SET status = '0' where id != '"+id+ "' AND status != '2' ";
+                    int x = _context.Database.ExecuteSqlRaw(_update);
+                }
+            }
+
+            if (session.Status == "2")
+            {
+                var activeSession = await _context.TblSessions.Where(x => x.Status == "2").ToListAsync();
+                if (activeSession != null)
+                {
+                    var _update = "UPDATE tbl_session SET status = '0' where id != '" + id + "' AND status != '1'  ";
                     int x = _context.Database.ExecuteSqlRaw(_update);
                 }
             }

@@ -18,7 +18,7 @@ namespace schools_api_core.Controllers
         [HttpGet("terms-list")]
         public async Task<IEnumerable<TblTerm>> Get()
         {
-            return await _context.TblTerms.ToListAsync();
+            return await _context.TblTerms.OrderByDescending(x => x.EndDate).ToListAsync();
         }
 
         //GET ALL TERM BY ROW ID
@@ -54,12 +54,22 @@ namespace schools_api_core.Controllers
         public async Task<IActionResult> CreateTerm(TblTerm term)
         {
             var exisitingTerm = _context.TblTerms.Where(x => x.TermName == term.TermName).FirstOrDefault();
-            if (exisitingTerm != null) return BadRequest("term exists");
+            if (exisitingTerm != null) return BadRequest("term name already exists");
+
+            var activeTerm = _context.TblTerms.Where(x => x.Status == "1").FirstOrDefault();
+            if(activeTerm != null)
+            {
+                if (activeTerm?.Status == term.Status)
+                {
+                    return BadRequest("active term already exists");
+                }
+            }
 
             await _context.TblTerms.AddAsync(term);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = term.Id }, term);
+            //return CreatedAtAction(nameof(GetById), new { id = term.Id }, term);
+            return Ok("success");
         }
 
         //DELETE TERM
@@ -81,7 +91,11 @@ namespace schools_api_core.Controllers
             if (term.Status == "1")
             {
                 var activeTerm = await _context.TblTerms.Where(x => x.Status == "1").FirstOrDefaultAsync();
-                if (activeTerm != null) return BadRequest("active term exists");
+                if (activeTerm != null)
+                {
+                    var _update = "UPDATE tbl_term SET status = '0' where id != '" + id + "' ";
+                    int x = _context.Database.ExecuteSqlRaw(_update);
+                }
             }
 
             var tt = await _context.TblTerms.FindAsync(id);
@@ -94,13 +108,13 @@ namespace schools_api_core.Controllers
                 tt.EndDate = term.EndDate;
                 tt.Status = term.Status;
                 tt.AddedBy = term.AddedBy;
-                tt.DateAdded = term.DateAdded;
+                tt.DateAdded = Convert.ToDateTime(DateTime.Now);
                 await _context.SaveChangesAsync();
             }
             //await Task.WhenAll(
             //    //to improve performance
             //    );
-            return Ok("updateds");
+            return Ok("success");
         }
     }
 }

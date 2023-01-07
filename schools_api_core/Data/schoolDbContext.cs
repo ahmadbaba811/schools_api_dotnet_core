@@ -158,6 +158,11 @@ public partial class schoolDbContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK_tbl_comments");
         });
 
+        modelBuilder.Entity<TblRole>(entity =>
+        {
+            entity.Property(e => e.AddedDate).HasDefaultValueSql("(getdate())");
+        });
+
         modelBuilder.Entity<TblSession>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_session");

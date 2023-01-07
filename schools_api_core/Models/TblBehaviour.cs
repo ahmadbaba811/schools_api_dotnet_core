@@ -6,28 +6,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace schools_api_core.Models;
 
-[Table("tbl_classes")]
-public partial class TblClass
+[Table("tbl_behaviour")]
+public partial class TblBehaviour
 {
     [Key]
     [Column("id")]
     public int Id { get; set; }
 
-    [Column("class_name")]
-    [StringLength(50)]
+    [Column("behavior_name")]
+    [StringLength(150)]
     [Unicode(false)]
-    public string? ClassName { get; set; }
-
-    [Column("category")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? Category { get; set; }
+    public string? BehaviorName { get; set; }
 
     [Column("added_by")]
     [StringLength(50)]
     [Unicode(false)]
     public string? AddedBy { get; set; }
 
-    [Column("date_added", TypeName = "date")]
+    [Column("date_added", TypeName = "datetime")]
     public DateTime? DateAdded { get; set; }
 }

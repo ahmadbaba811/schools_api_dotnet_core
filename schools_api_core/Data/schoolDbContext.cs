@@ -18,6 +18,8 @@ public partial class schoolDbContext : DbContext
 
     public virtual DbSet<TblAssignTeacher> TblAssignTeachers { get; set; }
 
+    public virtual DbSet<TblBehaviour> TblBehaviours { get; set; }
+
     public virtual DbSet<TblChat> TblChats { get; set; }
 
     public virtual DbSet<TblClass> TblClasses { get; set; }
@@ -78,13 +80,18 @@ public partial class schoolDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-NL26F2F\\SQL_SERVER;Initial Catalog=schooldb_a121w;User ID=sa;Password=a; Encrypt= false");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-RK4H6L4\\SA;Initial Catalog=schooldb_a121w;User ID=sa;Password=a; Encrypt= false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TblAssignTeacher>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_Assign_Teacher");
+        });
+
+        modelBuilder.Entity<TblBehaviour>(entity =>
+        {
+            entity.Property(e => e.DateAdded).HasDefaultValueSql("(getdate())");
         });
 
         modelBuilder.Entity<TblChat>(entity =>
@@ -107,6 +114,8 @@ public partial class schoolDbContext : DbContext
         modelBuilder.Entity<TblFormMaster>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_FormMasters");
+
+            entity.Property(e => e.DateAdded).HasDefaultValueSql("(getdate())");
         });
 
         modelBuilder.Entity<TblLogin>(entity =>

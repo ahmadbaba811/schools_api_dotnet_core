@@ -28,8 +28,10 @@ public partial class TblLogin
     [Unicode(false)]
     public string? Status { get; set; }
 
-    [Column("login_date", TypeName = "datetime")]
-    public DateTime? LoginDate { get; set; }
+    [Column("login_date")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? LoginDate { get; set; }
 
     [Column("ip_address")]
     [StringLength(50)]

@@ -13,11 +13,19 @@ namespace schools_api_core.Controllers
         private readonly schoolDbContext _context;
         public BehaviorController(schoolDbContext context) => _context = context;
 
+        //GET ALL BEHAVIOUR SETTINGS LIST
+        [HttpGet("behaviour-settings-list")]
+        public async Task<IActionResult> GetBehaviours()
+        {
+            var behaviour = await _context.TblBehaviours.OrderByDescending(x => x.DateAdded).ToListAsync();
+            return Ok(behaviour);
+        }
+
         //GET ALL STUDENT BEHAVIOUR LIST
         [HttpGet("behaviour-list")]
         public async Task<IActionResult> Get()
         {
-            var behaviour = await _context.TblStudentBehaviors.ToListAsync();
+            var behaviour = await _context.TblStudentBehaviors.OrderByDescending(x => x.DateAdded).ToListAsync();
             return Ok(behaviour);
         }
 
@@ -30,6 +38,7 @@ namespace schools_api_core.Controllers
             return Ok(behaviour);
         }
 
+
         //GET ALL STUDENT BEHAVIOUR BY STUDENT ID/TERM ID/ CLASS ID/ SESSION ID
         [HttpGet("behaviour/{regno}/{term_id}/{class_id}/{session_id}")]
         public async Task<IActionResult> GetByStudentId(string regno, string term_id, string class_id, string session_id)
@@ -39,6 +48,19 @@ namespace schools_api_core.Controllers
             return Ok(behaviour);
         }
 
+        //ADD NEW BEHAVIOUR 
+        [HttpPost("add-behaviour-setting")]
+        public async Task<IActionResult> AddBehaviorSetting(TblBehaviour beh)
+        {
+            var behaviorToAdd = await _context.TblBehaviours.Where(x => x.BehaviorName ==beh.BehaviorName).FirstOrDefaultAsync();
+            if (behaviorToAdd != null) return BadRequest("behavior exists");
+
+            await _context.TblBehaviours.AddAsync(beh);
+            await _context.SaveChangesAsync();
+
+            //return CreatedAtAction(nameof(GetById), new { id = beh.Id }, beh);
+            return Ok("success");
+        }
 
         //ADD NEW STUDENT BEHAVIOUR 
         [HttpPost("add-behaviour")]
@@ -50,7 +72,7 @@ namespace schools_api_core.Controllers
             await _context.TblStudentBehaviors.AddAsync(beh);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = beh.Id }, beh);
+            return Ok("success");
         }
 
         //DELETE STUDENT BEHAVIOUR 

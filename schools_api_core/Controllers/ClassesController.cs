@@ -18,7 +18,7 @@ namespace schools_api_core.Controllers
         [HttpGet("class-list")]
         public async Task<IActionResult> Get()
         {
-            var classes = await _context.TblClasses.ToListAsync();
+            var classes = await _context.TblClasses.OrderBy(x => x.ClassName).ToListAsync();
             return Ok(classes);
         }
 
@@ -42,15 +42,15 @@ namespace schools_api_core.Controllers
 
         //ADD NEW CLASS
         [HttpPost("add-class")]
-        public async Task<IActionResult> CreateClass(TblClass term)
+        public async Task<IActionResult> CreateClass(TblClass cl)
         {
-            var exisitingClass = _context.TblClasses.Where(x => x.ClassName == term.ClassName).FirstOrDefault();
-            if (exisitingClass != null) return BadRequest("class exists");
+            var existingClass = _context.TblClasses.Where(x => x.ClassName == cl.ClassName).FirstOrDefault();
+            if (existingClass != null) return BadRequest("class exists");
 
-            await _context.TblClasses.AddAsync(term);
+            await _context.TblClasses.AddAsync(cl);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = term.Id }, term);
+            return Ok("success");
         }
 
         //DELETE CLASS
@@ -60,13 +60,19 @@ namespace schools_api_core.Controllers
             var classToDelete = await _context.TblClasses.FindAsync(id);
             if (classToDelete == null) return BadRequest("no record");
 
+            var checkClass = await _context.TblStudentBiodata
+                .Where(x => x.ClassId == id.ToString())
+                .FirstOrDefaultAsync();
+
+            if (checkClass != null) return BadRequest("there are students in this class");
+
             _context.TblClasses.Remove(classToDelete);
             await _context.SaveChangesAsync();
-            return Ok("deleted");
+            return Ok("success");
         }
 
         //UPDATE CLASS
-        [HttpPut("update-term/{id}")]
+        [HttpPut("update-class/{id}")]
         public async Task<IActionResult> UpdateClass(int id, TblClass _class)
         {
             var tt = await _context.TblClasses.FindAsync(id);
@@ -77,10 +83,10 @@ namespace schools_api_core.Controllers
                 tt.ClassName = _class.ClassName;
                 tt.Category = _class.Category;
                 tt.AddedBy = _class.AddedBy;
-                tt.DateAdded = _class.DateAdded;
+                tt.DateAdded = Convert.ToDateTime(DateTime.Now);
                 await _context.SaveChangesAsync();
             }
-            return Ok("updated");
+            return Ok("success");
         }
 
 

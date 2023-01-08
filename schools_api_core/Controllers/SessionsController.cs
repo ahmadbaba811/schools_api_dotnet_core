@@ -43,7 +43,7 @@ namespace schools_api_core.Controllers
         [HttpGet("active-session")]
         public async Task<IActionResult> GetActiveSession()
         {
-            var session = await _context.TblSessions.Where(x => x.Status == "1").FirstOrDefaultAsync();
+            var session = await _context.TblSessions.Where(x => x.Status == "1").ToListAsync();
             if (session == null) return BadRequest("no record");
             return Ok(session);
         }
@@ -56,9 +56,12 @@ namespace schools_api_core.Controllers
             if (exisitingSeession != null) return BadRequest("session name already exists");
 
             var activeSession = _context.TblSessions.Where(x => x.Status == "1").FirstOrDefault();
-            if(activeSession?.Status == se.Status)
+            if(activeSession != null)
             {
-                return BadRequest("active session already exists");
+                if (activeSession?.Status == se.Status)
+                {
+                    return BadRequest("active session already exists");
+                }
             }
 
             await _context.TblSessions.AddAsync(se);
@@ -88,7 +91,17 @@ namespace schools_api_core.Controllers
                 var activeSession = await _context.TblSessions.Where(x => x.Status == "1").ToListAsync();
                 if (activeSession != null)
                 {
-                    var _update = "UPDATE tbl_session SET status = '0' where id != '"+id+"' ";
+                    var _update = "UPDATE tbl_session SET status = '0' where id != '"+id+ "' AND status != '2' ";
+                    int x = _context.Database.ExecuteSqlRaw(_update);
+                }
+            }
+
+            if (session.Status == "2")
+            {
+                var activeSession = await _context.TblSessions.Where(x => x.Status == "2").ToListAsync();
+                if (activeSession != null)
+                {
+                    var _update = "UPDATE tbl_session SET status = '0' where id != '" + id + "' AND status != '1'  ";
                     int x = _context.Database.ExecuteSqlRaw(_update);
                 }
             }

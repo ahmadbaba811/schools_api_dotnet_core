@@ -17,7 +17,7 @@ namespace schools_api_core.Controllers
         [HttpGet("designations-list")]
         public async Task<IEnumerable<TblDesignation>> Get()
         {
-            return await _context.TblDesignations.ToListAsync();
+            return await _context.TblDesignations.OrderByDescending(x => x.AddedDate).ToListAsync();
         }
 
         //GET ALL DESIGNATIONS BY ROW ID
@@ -44,12 +44,12 @@ namespace schools_api_core.Controllers
         public async Task<IActionResult> CreateDesignation(TblDesignation _des)
         {
             var exisitingDesignation = _context.TblDesignations.Where(x => x.DesignationName == _des.DesignationName).FirstOrDefault();
-            if (exisitingDesignation != null) return BadRequest("subject exists");
+            if (exisitingDesignation != null) return BadRequest("designation exists");
 
             await _context.TblDesignations.AddAsync(_des);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = _des.Id }, _des);
+            return Ok("success");
         }
 
         //DELETE DESIGNATIONS
@@ -76,10 +76,10 @@ namespace schools_api_core.Controllers
                 tt.DesignationCode = _des.DesignationCode;
                 tt.DesignationName = _des.DesignationName;
                 tt.AddedBy = _des.AddedBy;
-                tt.AddedDate = _des.AddedDate;
+                tt.AddedDate = Convert.ToDateTime(DateTime.Now);
                 await _context.SaveChangesAsync();
             }
-            return Ok("updated");
+            return Ok("success");
         }
     }
 }

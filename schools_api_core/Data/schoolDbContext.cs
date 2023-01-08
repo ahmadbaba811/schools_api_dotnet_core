@@ -19,6 +19,8 @@ public partial class schoolDbContext : DbContext
 
     public virtual DbSet<TblAssignTeacher> TblAssignTeachers { get; set; }
 
+    public virtual DbSet<TblBehaviour> TblBehaviours { get; set; }
+
     public virtual DbSet<TblChat> TblChats { get; set; }
 
     public virtual DbSet<TblClass> TblClasses { get; set; }
@@ -90,6 +92,11 @@ public partial class schoolDbContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK_Assign_Teacher");
         });
 
+        modelBuilder.Entity<TblBehaviour>(entity =>
+        {
+            entity.Property(e => e.DateAdded).HasDefaultValueSql("(getdate())");
+        });
+
         modelBuilder.Entity<TblChat>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_chats");
@@ -152,6 +159,11 @@ public partial class schoolDbContext : DbContext
         modelBuilder.Entity<TblResultComment>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_tbl_comments");
+        });
+
+        modelBuilder.Entity<TblRole>(entity =>
+        {
+            entity.Property(e => e.AddedDate).HasDefaultValueSql("(getdate())");
         });
 
         modelBuilder.Entity<TblSession>(entity =>

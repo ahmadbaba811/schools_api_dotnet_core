@@ -28,12 +28,10 @@ public partial class TblLogin
     [Unicode(false)]
     public string? Status { get; set; }
 
-    [Column("login_date", TypeName = "date")]
-    public DateTime? LoginDate { get; set; }
-
-    [Column("login_time")]
-    [Precision(2)]
-    public TimeSpan? LoginTime { get; set; }
+    [Column("login_date")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? LoginDate { get; set; }
 
     [Column("ip_address")]
     [StringLength(50)]
@@ -44,8 +42,4 @@ public partial class TblLogin
     [StringLength(50)]
     [Unicode(false)]
     public string? Location { get; set; }
-
-    [Column("passport")]
-    [Unicode(false)]
-    public string? Passport { get; set; }
 }

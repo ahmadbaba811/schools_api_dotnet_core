@@ -9,11 +9,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//to use use sql
 builder.Services.AddDbContext<schoolDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("schCon")));
 
-builder.Services.AddCors(p => p.AddPolicy("schCors", builder =>
+builder.Services.AddCors(p => p.AddPolicy("schCors", x =>
 {
-    builder.WithOrigins("*").AllowAnyOrigin().AllowAnyHeader();
+    x.WithOrigins("*").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
 }));
 
 var app = builder.Build();
@@ -25,6 +27,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("schCors");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

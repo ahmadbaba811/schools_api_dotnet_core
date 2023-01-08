@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using schools_api_core.Data;
 using schools_api_core.Models;
+using System;
 
 namespace schools_api_core.Controllers
 {
@@ -17,7 +18,7 @@ namespace schools_api_core.Controllers
         [HttpGet("session-list")]
         public async Task<IEnumerable<TblSession>> Get()
         {
-            return await _context.TblSessions.ToListAsync();
+            return await _context.TblSessions.OrderByDescending(x => x.EndDate).ToListAsync();
         }
 
         //GET ALL SESSION BY ROW ID
@@ -49,15 +50,21 @@ namespace schools_api_core.Controllers
 
         //ADD NEW SESSION
         [HttpPost("add-session")]
-        public async Task<IActionResult> CreateSession(TblSession session)
+        public async Task<IActionResult> CreateSession(TblSession se)
         {
-            var exisitingSeession = _context.TblSessions.Where(x => x.SessionName == session.SessionName).FirstOrDefault();
-            if (exisitingSeession != null) return BadRequest("session exists");
+            var exisitingSeession = _context.TblSessions.Where(x => x.SessionName == se.SessionName).FirstOrDefault();
+            if (exisitingSeession != null) return BadRequest("session name already exists");
 
-            await _context.TblSessions.AddAsync(session);
+            var activeSession = _context.TblSessions.Where(x => x.Status == "1").FirstOrDefault();
+            if(activeSession?.Status == se.Status)
+            {
+                return BadRequest("active session already exists");
+            }
+
+            await _context.TblSessions.AddAsync(se);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = session.Id }, session);
+            return Ok("success");
         }
 
         //DELETE SESSION
@@ -69,7 +76,7 @@ namespace schools_api_core.Controllers
 
             _context.TblSessions.Remove(sessionToDelete);
             await _context.SaveChangesAsync();
-            return Ok("deleted");
+            return Ok("success");
         }
 
         //UPDATE SESSION
@@ -78,8 +85,12 @@ namespace schools_api_core.Controllers
         {
             if (session.Status == "1")
             {
-                var activeSession = await _context.TblSessions.Where(x => x.Status == "1").FirstOrDefaultAsync();
-                if (activeSession != null) return BadRequest("active session exists");
+                var activeSession = await _context.TblSessions.Where(x => x.Status == "1").ToListAsync();
+                if (activeSession != null)
+                {
+                    var _update = "UPDATE tbl_session SET status = '0' where id != '"+id+"' ";
+                    int x = _context.Database.ExecuteSqlRaw(_update);
+                }
             }
 
             var ss = await _context.TblSessions.FindAsync(id);
@@ -97,7 +108,7 @@ namespace schools_api_core.Controllers
                 ss.AddedDate = session.AddedDate;
                 await _context.SaveChangesAsync();
             }
-            return Ok("updated");
+            return Ok("success");
         }
     }
 }

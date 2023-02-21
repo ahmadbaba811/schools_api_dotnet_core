@@ -13,15 +13,15 @@ public partial class TblSubject
     [Column("id")]
     public int Id { get; set; }
 
-    [Column("subject_name")]
+    [Column("subject_code")]
     [StringLength(50)]
+    [Unicode(false)]
+    public string? SubjectCode { get; set; }
+
+    [Column("subject_name")]
+    [StringLength(150)]
     [Unicode(false)]
     public string? SubjectName { get; set; }
-
-    [Column("subject_category")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? SubjectCategory { get; set; }
 
     [Column("added_by")]
     [StringLength(50)]

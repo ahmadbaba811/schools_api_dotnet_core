@@ -38,20 +38,15 @@ public partial class TblStudentBiodatum
     [Unicode(false)]
     public string? ClassId { get; set; }
 
-    [Column("class_name")]
+    [Column("entry_session")]
     [StringLength(50)]
     [Unicode(false)]
-    public string? ClassName { get; set; }
+    public string? EntrySession { get; set; }
 
-    [Column("entry_session_name")]
+    [Column("grad_session")]
     [StringLength(50)]
     [Unicode(false)]
-    public string? EntrySessionName { get; set; }
-
-    [Column("grad_session_name")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? GradSessionName { get; set; }
+    public string? GradSession { get; set; }
 
     [Column("subject_group")]
     [StringLength(50)]

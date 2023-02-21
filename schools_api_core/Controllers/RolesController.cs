@@ -17,7 +17,7 @@ namespace schools_api_core.Controllers
         [HttpGet("roles-list")]
         public async Task<IActionResult> Get()
         {
-            var roles = await _context.TblRoles.ToListAsync();
+            var roles = await _context.TblRoles.OrderByDescending(x => x.AddedDate).ToListAsync();
             return Ok(roles);
         }
 
@@ -50,7 +50,7 @@ namespace schools_api_core.Controllers
             await _context.TblRoles.AddAsync(_role);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = _role.Id }, _role);
+            return Ok("success");
         }
 
         //DELETE ROLE
@@ -76,10 +76,10 @@ namespace schools_api_core.Controllers
             {
                 tt.RoleName = _role.RoleName;
                 tt.AddedBy = _role.AddedBy;
-                tt.AddedDate = _role.AddedDate;
+                tt.AddedDate = Convert.ToDateTime(DateTime.Now);
                 await _context.SaveChangesAsync();
             }
-            return Ok("updated");
+            return Ok("success");
         }
     }
 }

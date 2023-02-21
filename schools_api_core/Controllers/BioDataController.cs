@@ -33,6 +33,15 @@ namespace schools_api_core.Controllers
             return Ok(student);
         }
 
+        //GET LAST STUDENT ID
+        [HttpGet("last-student-id")]
+        public async Task<IActionResult> GetLastStudentID()
+        {
+            var student = await _context.TblStudentBiodata.OrderByDescending(x => x.Regno).FirstAsync();
+
+            return Ok(student);
+        }
+
         //GET ALL STUDENTS BY STUDENT ID
         [HttpGet("student-by-regno/{regno}")]
         public async Task<IActionResult> GetByStudentId(string regno)
@@ -106,8 +115,6 @@ namespace schools_api_core.Controllers
             if (studToUpdate != null)
             {
                 studToUpdate.ClassId = stud.ClassId;
-                studToUpdate.ClassName = stud.ClassName;
-
                 await _context.SaveChangesAsync();
             }
 

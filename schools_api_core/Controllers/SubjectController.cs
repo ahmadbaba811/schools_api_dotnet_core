@@ -51,7 +51,7 @@ namespace schools_api_core.Controllers
             await _context.TblSubjects.AddAsync(subject);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = subject.Id }, subject);
+            return Ok("success");
         }
 
         //DELETE SUBJECT
@@ -63,7 +63,7 @@ namespace schools_api_core.Controllers
 
             _context.TblSubjects.Remove(subjectToDelete);
             await _context.SaveChangesAsync();
-            return Ok("deleted");
+            return Ok("success");
         }
 
 
@@ -77,12 +77,12 @@ namespace schools_api_core.Controllers
             if (tt != null)
             {
                 tt.SubjectName = _subject.SubjectName;
-                tt.SubjectCategory = _subject.SubjectCategory;
+                tt.SubjectCode = _subject.SubjectCode;
                 tt.AddedBy = _subject.AddedBy;
-                tt.AddedDate = _subject.AddedDate;
+                tt.AddedDate = Convert.ToDateTime(DateTime.Now);
                 await _context.SaveChangesAsync();
             }
-            return Ok("updated");
+            return Ok("success");
         }
 
 
@@ -118,12 +118,12 @@ namespace schools_api_core.Controllers
         public async Task<IActionResult> CreateSubjectGroup(TblSubjectGroup subject)
         {
             var exisitingSubjectGroup = _context.TblSubjectGroups.Where(x => x.SubjectName == subject.SubjectName && x.GroupCode == subject.GroupCode).FirstOrDefault();
-            if (exisitingSubjectGroup != null) return BadRequest("group exists");
+            if (exisitingSubjectGroup != null) return BadRequest("subject exists in the group already");
 
             await _context.TblSubjectGroups.AddAsync(subject);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetBySubjectId), new { id = subject.Id }, subject);
+            return Ok("success");
         }
 
 

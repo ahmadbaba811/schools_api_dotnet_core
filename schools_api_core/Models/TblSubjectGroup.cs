@@ -19,7 +19,7 @@ public partial class TblSubjectGroup
     public string? GroupCode { get; set; }
 
     [Column("group_name")]
-    [StringLength(50)]
+    [StringLength(150)]
     [Unicode(false)]
     public string? GroupName { get; set; }
 
@@ -39,7 +39,7 @@ public partial class TblSubjectGroup
     public string? SubjectId { get; set; }
 
     [Column("subject_name")]
-    [StringLength(50)]
+    [StringLength(250)]
     [Unicode(false)]
     public string? SubjectName { get; set; }
 

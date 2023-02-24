@@ -18,15 +18,10 @@ public partial class TblAssignTeacher
     [Unicode(false)]
     public string? StaffId { get; set; }
 
-    [Column("subject_code")]
+    [Column("subject_id")]
     [StringLength(50)]
     [Unicode(false)]
-    public string? SubjectCode { get; set; }
-
-    [Column("subject_category")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? SubjectCategory { get; set; }
+    public string? SubjectId { get; set; }
 
     [Column("class_id")]
     [StringLength(50)]

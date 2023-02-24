@@ -101,10 +101,12 @@ public partial class TblStudentBiodatum
     [Unicode(false)]
     public string? Passport { get; set; }
 
-    [Column("status")]
-    public bool? Status { get; set; }
+    [Column("student_status")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? StudentStatus { get; set; }
 
-    [Column("date_added", TypeName = "date")]
+    [Column("date_added", TypeName = "datetime")]
     public DateTime? DateAdded { get; set; }
 
     [Column("added_by")]

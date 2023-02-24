@@ -24,6 +24,14 @@ namespace schools_api_core.Controllers
             return Ok(student);
         }
 
+        //GET ALL STUDENTS LIST BY CLASS ID
+        [HttpGet("student-list/{class_id}")]
+        public async Task<IActionResult> GetByClassID(string class_id)
+        {
+            var student = await _context.TblStudentBiodata.Where(x => x.ClassId == class_id ).ToListAsync();
+            return Ok(student);
+        }
+
         //GET ALL STUDENTS BY ROW ID
         [HttpGet("student/{id}")]
         public async Task<IActionResult> GetById(int id)
@@ -37,8 +45,8 @@ namespace schools_api_core.Controllers
         [HttpGet("last-student-id")]
         public async Task<IActionResult> GetLastStudentID()
         {
-            var student = await _context.TblStudentBiodata.OrderByDescending(x => x.Regno).FirstAsync();
-
+            var student = await _context.TblStudentBiodata.OrderByDescending(x => x.Regno).FirstOrDefaultAsync();
+            if (student == null) return Ok("no record");
             return Ok(student);
         }
 
@@ -56,13 +64,17 @@ namespace schools_api_core.Controllers
         [HttpPost("add-student")]
         public async Task<IActionResult> CreatePComment(TblStudentBiodatum stud)
         {
-            var studToAdd = await _context.TblStudentBiodata.Where(x => x.Email == stud.Email).FirstOrDefaultAsync();
-            if (studToAdd != null) return BadRequest("student exists");
+            /*var studToAdd = await _context.TblStudentBiodata.Where(x => x.Phone == stud.Phone).FirstOrDefaultAsync();
+            if (studToAdd != null) return BadRequest("student exists");*/
 
             await _context.TblStudentBiodata.AddAsync(stud);
-            await _context.SaveChangesAsync();
+            var check = await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = stud.Id }, stud);
+            if(check > 0 ) { return Ok("success"); }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         //DELETE STUDENTS
@@ -98,7 +110,7 @@ namespace schools_api_core.Controllers
 
             if(studToUpdate != null)
             {
-                studToUpdate.Status = stud.Status;
+                studToUpdate.StudentStatus = stud.StudentStatus;
                 await _context.SaveChangesAsync();
             }
 

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using schools_api_core.Data;
 using schools_api_core.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace schools_api_core.Controllers
 {
@@ -45,8 +47,8 @@ namespace schools_api_core.Controllers
         [HttpPost("add-subject")]
         public async Task<IActionResult> CreateSubject(TblSubject subject)
         {
-            var exisitingSubject = _context.TblSubjects.Where(x => x.SubjectName == subject.SubjectName).FirstOrDefault();
-            if (exisitingSubject != null) return BadRequest("subject exists");
+            var exisitingSubject = _context.TblSubjects.Where(x => x.SubjectName == subject.SubjectName || x.SubjectCode == subject.SubjectCode).FirstOrDefault();
+            if (exisitingSubject != null) return BadRequest("subject with same name or code exists");
 
             await _context.TblSubjects.AddAsync(subject);
             await _context.SaveChangesAsync();
@@ -60,6 +62,11 @@ namespace schools_api_core.Controllers
         {
             var subjectToDelete = await _context.TblSubjects.FindAsync(id);
             if (subjectToDelete == null) return BadRequest("no record");
+
+            var subjectWithScores = await _context.TblStudentScores
+                .Where(x => x.SubjectId == id.ToString()).FirstOrDefaultAsync();
+            if (subjectWithScores != null) return BadRequest("there are students with scores for this subject");
+
 
             _context.TblSubjects.Remove(subjectToDelete);
             await _context.SaveChangesAsync();
@@ -93,9 +100,8 @@ namespace schools_api_core.Controllers
             return await _context.TblSubjectGroups.ToListAsync();
         }
 
-
         //GET ALL SUBJECT GROUP BY GROUPCODE
-        [HttpGet("subject-group-by-name/{group_code}")]
+        [HttpGet("subject-group-by-code/{group_code}")]
         public async Task<IActionResult> GetSubjectGroupByCode(string group_code)
         {
             var subject_group = await _context.TblSubjectGroups.Where(x => x.GroupCode == group_code).ToListAsync();

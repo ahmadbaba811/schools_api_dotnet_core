@@ -1,5 +1,6 @@
 /schools_api_core/appsettings.json
 /schools_api_core/bin
 /schools_api_core/obj
+/schools_api_core/program.cs
 
 /.vs

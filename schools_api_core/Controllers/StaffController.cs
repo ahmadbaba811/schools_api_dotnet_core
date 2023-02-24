@@ -153,7 +153,7 @@ namespace schools_api_core.Controllers
         public async Task<IActionResult> AssignSubjectTeacher(TblAssignTeacher teacher)
         {
             var existingSubject = await _context.TblAssignTeachers.Where(x =>
-            x.SubjectCode == teacher.SubjectCode &&
+            x.SubjectId == teacher.SubjectId &&
             x.TermId == teacher.TermId &&
             x.ClassId == teacher.ClassId &&
             x.SessionId == teacher.SessionId
@@ -162,13 +162,13 @@ namespace schools_api_core.Controllers
 
             await _context.TblAssignTeachers.AddAsync(teacher);
             await _context.SaveChangesAsync();
-            return Ok();
+            return Ok("success");
         }
 
 
         //DELETE SUBJECT TEACHER ASSIGNMENT
         [HttpDelete("delete-subject-teacher/{id}")]
-        public async Task<IActionResult> DeleteSubjectTeacher(int id, TblAssignTeacher teacher)
+        public async Task<IActionResult> DeleteSubjectTeacher(int id)
         {
             var teacherToDelete = await _context.TblAssignTeachers.FindAsync(id);
 
@@ -176,7 +176,7 @@ namespace schools_api_core.Controllers
 
             _context.TblAssignTeachers.Remove(teacherToDelete);
             await _context.SaveChangesAsync();
-            return Ok("deleted");
+            return Ok("success");
         }
 
 

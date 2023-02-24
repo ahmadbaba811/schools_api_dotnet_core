@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using schools_api_core.Controllers;
 using schools_api_core.Models;
 
 namespace schools_api_core.Data;
@@ -79,17 +78,19 @@ public partial class schoolDbContext : DbContext
 
     public virtual DbSet<VwSubjectMaxMin> VwSubjectMaxMins { get; set; }
 
-    public virtual DbSet<TblAddSubjects> TblAddSubjects { get; set; }
+    public virtual DbSet<VwTest> VwTests { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-JDPULFC\\JIBRILMUHAMMAD;Initial Catalog=schooldb_a121w;User ID=sa;Password=edati_jibril; Encrypt= false");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-NL26F2F\\SQL_SERVER;Initial Catalog=schooldb_a121w;User ID=sa;Password=a; Encrypt= false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TblAssignTeacher>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_Assign_Teacher");
+
+            entity.Property(e => e.DateAssigned).HasDefaultValueSql("(getdate())");
         });
 
         modelBuilder.Entity<TblBehaviour>(entity =>
@@ -262,15 +263,6 @@ public partial class schoolDbContext : DbContext
             entity.Property(e => e.TermName).IsFixedLength();
         });
 
-        modelBuilder.Entity<TblAddSubjects>(entity =>
-        {
-            entity.Property(e => e.Subject).IsFixedLength();
-            entity.Property(e => e.added_by).IsFixedLength();
-            entity.HasKey(e => e.id).HasName("PK_Subject");
-
-            entity.Property(e => e.date_added).HasDefaultValueSql("(getdate())");
-        });
-
         modelBuilder.Entity<VwStudentResult>(entity =>
         {
             entity.ToView("vw_student_results");
@@ -289,6 +281,11 @@ public partial class schoolDbContext : DbContext
         modelBuilder.Entity<VwSubjectMaxMin>(entity =>
         {
             entity.ToView("vw_subject_max_min");
+        });
+
+        modelBuilder.Entity<VwTest>(entity =>
+        {
+            entity.ToView("vw_test");
         });
 
         OnModelCreatingPartial(modelBuilder);

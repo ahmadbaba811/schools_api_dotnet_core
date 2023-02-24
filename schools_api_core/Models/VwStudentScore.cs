@@ -66,7 +66,7 @@ public partial class VwStudentScore
     public string? SubjectId { get; set; }
 
     [Column("subject_name")]
-    [StringLength(50)]
+    [StringLength(150)]
     [Unicode(false)]
     public string? SubjectName { get; set; }
 

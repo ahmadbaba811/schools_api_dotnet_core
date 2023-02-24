@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "dvWVBTPHXyEjsh2Vh+0jb7wsaq4I8p9G7xK4v9SFfaA=",
+  "Source": "schools_api_core",
+  "BasePath": "_content/schools_api_core",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

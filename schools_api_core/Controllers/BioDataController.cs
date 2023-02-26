@@ -51,10 +51,10 @@ namespace schools_api_core.Controllers
         }
 
         //GET ALL STUDENTS BY STUDENT ID
-        [HttpGet("student-by-regno/{regno}")]
-        public async Task<IActionResult> GetByStudentId(string regno)
+        [HttpPost("student-by-regno")]
+        public async Task<IActionResult> GetByStudentId(TblStudentBiodatum stud)
         {
-            var student = await _context.TblStudentBiodata.Where(x => x.Regno == regno).ToListAsync();
+            var student = await _context.TblStudentBiodata.Where(x => x.Regno == stud.Regno).ToListAsync();
             if (student == null) return BadRequest("no record");
             return Ok(student);
         }
@@ -86,7 +86,7 @@ namespace schools_api_core.Controllers
 
             _context.TblStudentBiodata.Remove(studentToDelete);
             await _context.SaveChangesAsync();
-            return Ok("deleted");
+            return Ok("success");
         }
 
         //UPDATE STUDENTS BY ROW ID
@@ -98,11 +98,11 @@ namespace schools_api_core.Controllers
             _context.Entry(stud).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            return Ok("updated");
+            return Ok("success");
         }
 
         //UPDATE STUDENT STATUS BY REGNO
-        [HttpPut("update-student-status/{id}")]
+        [HttpPut("update-student-status")]
         public async Task<IActionResult> UpdateStatus(int id, TblStudentBiodatum stud)
         {
             var studToUpdate = await _context.TblStudentBiodata.Where(x => x.Regno == stud.Regno).FirstOrDefaultAsync();
@@ -114,12 +114,12 @@ namespace schools_api_core.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return Ok("updated");
+            return Ok("success");
         }
 
         //UPDATE STUDENT CLASS BY REGNO
-        [HttpPut("update-student-class/{id}")]
-        public async Task<IActionResult> UpdateClass(int id, TblStudentBiodatum stud)
+        [HttpPut("update-student-class")]
+        public async Task<IActionResult> UpdateClass(TblStudentBiodatum stud)
         {
             var studToUpdate = await _context.TblStudentBiodata.Where(x => x.Regno == stud.Regno).FirstOrDefaultAsync();
             if (studToUpdate == null) return NotFound("no record");
@@ -130,11 +130,11 @@ namespace schools_api_core.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return Ok("updated");
+            return Ok("success");
         }
 
         //UPDATE STUDENT GROUP BY REGNO
-        [HttpPut("update-student-group/{id}")]
+        [HttpPut("update-student-group")]
         public async Task<IActionResult> UpdateGroup(int id, TblStudentBiodatum stud)
         {
             var studToUpdate = await _context.TblStudentBiodata.Where(x => x.Regno == stud.Regno).FirstOrDefaultAsync();
@@ -146,7 +146,7 @@ namespace schools_api_core.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return Ok("updated");
+            return Ok("success");
         }
 
         //UPDATE STUDENT GROUP BY CLASS
@@ -159,7 +159,7 @@ namespace schools_api_core.Controllers
             var sGroup = subject_group;
             var update = await _context.TblStudentBiodata.FromSql($"UPDATE dbo.tbl_student_biodata SET subject_group = {sGroup} WHERE class_id = {stud.ClassId}").ToListAsync();
 
-            return Ok("updated");
+            return Ok("success");
         }
     }
 

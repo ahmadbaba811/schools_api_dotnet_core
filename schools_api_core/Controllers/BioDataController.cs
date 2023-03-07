@@ -161,6 +161,22 @@ namespace schools_api_core.Controllers
 
             return Ok("success");
         }
+
+        //UPDATE STUDENT PARENT BY REGNO
+        [HttpPut("update-student-parent")]
+        public async Task<IActionResult> UpdateParent(TblStudentBiodatum stud)
+        {
+            var studToUpdate = await _context.TblStudentBiodata.Where(x => x.Regno == stud.Regno).FirstOrDefaultAsync();
+            if (studToUpdate == null) return NotFound("no record");
+
+            if (studToUpdate != null)
+            {
+                studToUpdate.ParentId = stud.ParentId;
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok("success");
+        }
     }
 
 }

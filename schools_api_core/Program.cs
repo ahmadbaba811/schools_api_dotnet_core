@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using schools_api_core.Configuration;
 using schools_api_core.Data;
 
 var builder = WebApplication.CreateBuilder(args);

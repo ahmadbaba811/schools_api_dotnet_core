@@ -42,7 +42,7 @@
           "dependencies": {
             "MailKit": {
               "target": "Package",
-              "version": "[3.5.0, )"
+              "version": "[3.6.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",

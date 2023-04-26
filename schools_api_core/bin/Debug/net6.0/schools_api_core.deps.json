@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "schools_api_core/1.0.0": {
         "dependencies": {
-          "MailKit": "3.5.0",
+          "MailKit": "3.6.0",
           "Microsoft.EntityFrameworkCore": "7.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.3",
@@ -60,14 +60,14 @@
           }
         }
       },
-      "MailKit/3.5.0": {
+      "MailKit/3.6.0": {
         "dependencies": {
-          "MimeKit": "3.5.0"
+          "MimeKit": "3.6.0"
         },
         "runtime": {
           "lib/net6.0/MailKit.dll": {
-            "assemblyVersion": "3.5.0.0",
-            "fileVersion": "3.5.0.0"
+            "assemblyVersion": "3.6.0.0",
+            "fileVersion": "3.6.0.0"
           }
         }
       },
@@ -459,7 +459,7 @@
           }
         }
       },
-      "MimeKit/3.5.0": {
+      "MimeKit/3.6.0": {
         "dependencies": {
           "Portable.BouncyCastle": "1.9.0",
           "System.Runtime.CompilerServices.Unsafe": "6.0.0",
@@ -468,8 +468,8 @@
         },
         "runtime": {
           "lib/net6.0/MimeKit.dll": {
-            "assemblyVersion": "3.5.0.0",
-            "fileVersion": "3.5.0.0"
+            "assemblyVersion": "3.6.0.0",
+            "fileVersion": "3.6.0.0"
           }
         }
       },
@@ -815,12 +815,12 @@
       "path": "humanizer.core/2.14.1",
       "hashPath": "humanizer.core.2.14.1.nupkg.sha512"
     },
-    "MailKit/3.5.0": {
+    "MailKit/3.6.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-7tvc+Um6JWOgvAv4I7DhPEDbHVaRH06m1ECZoJw2n9cyBcCZbyZy4AhVhTxGjM/vFYogh+UDboOnn7xd7WRV1Q==",
-      "path": "mailkit/3.5.0",
-      "hashPath": "mailkit.3.5.0.nupkg.sha512"
+      "sha512": "sha512-P7sL/bWj6girXBYlmZmCQnS6Y0DHMe947iiH+Dzl3vlJJiFUcnhxJei/gnrIARuaFUpPoYoFjVqguHwOT4Myzg==",
+      "path": "mailkit/3.6.0",
+      "hashPath": "mailkit.3.6.0.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
       "type": "package",
@@ -1074,12 +1074,12 @@
       "path": "microsoft.win32.systemevents/5.0.0",
       "hashPath": "microsoft.win32.systemevents.5.0.0.nupkg.sha512"
     },
-    "MimeKit/3.5.0": {
+    "MimeKit/3.6.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-XHRxnUJjNC6ufN94Yixp0QaLAZL+4L3huwzBhG5grBn68FQo3lH24gHKl15ceK4ktsALTqxdKPc/iMbQ442CGA==",
-      "path": "mimekit/3.5.0",
-      "hashPath": "mimekit.3.5.0.nupkg.sha512"
+      "sha512": "sha512-R7WNYvUA+qn4PHt1rMaIUJ3nyloZ2SlWyLjnLfGm90kbMcU/4sYS2QSQMs1dWbtcts5B0CSfB5a2jB9fWX9DAQ==",
+      "path": "mimekit/3.6.0",
+      "hashPath": "mimekit.3.6.0.nupkg.sha512"
     },
     "Mono.TextTemplating/2.2.1": {
       "type": "package",

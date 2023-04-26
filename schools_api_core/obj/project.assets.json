@@ -59,10 +59,10 @@
           }
         }
       },
-      "MailKit/3.5.0": {
+      "MailKit/3.6.0": {
         "type": "package",
         "dependencies": {
-          "MimeKit": "3.5.0"
+          "MimeKit": "3.6.0"
         },
         "compile": {
           "lib/net6.0/MailKit.dll": {
@@ -694,7 +694,7 @@
           }
         }
       },
-      "MimeKit/3.5.0": {
+      "MimeKit/3.6.0": {
         "type": "package",
         "dependencies": {
           "Portable.BouncyCastle": "1.9.0",
@@ -1381,10 +1381,10 @@
         "logo.png"
       ]
     },
-    "MailKit/3.5.0": {
-      "sha512": "7tvc+Um6JWOgvAv4I7DhPEDbHVaRH06m1ECZoJw2n9cyBcCZbyZy4AhVhTxGjM/vFYogh+UDboOnn7xd7WRV1Q==",
+    "MailKit/3.6.0": {
+      "sha512": "P7sL/bWj6girXBYlmZmCQnS6Y0DHMe947iiH+Dzl3vlJJiFUcnhxJei/gnrIARuaFUpPoYoFjVqguHwOT4Myzg==",
       "type": "package",
-      "path": "mailkit/3.5.0",
+      "path": "mailkit/3.6.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1407,7 +1407,7 @@
         "lib/netstandard2.1/MailKit.dll",
         "lib/netstandard2.1/MailKit.pdb",
         "lib/netstandard2.1/MailKit.xml",
-        "mailkit.3.5.0.nupkg.sha512",
+        "mailkit.3.6.0.nupkg.sha512",
         "mailkit.nuspec"
       ]
     },
@@ -2560,10 +2560,10 @@
         "version.txt"
       ]
     },
-    "MimeKit/3.5.0": {
-      "sha512": "XHRxnUJjNC6ufN94Yixp0QaLAZL+4L3huwzBhG5grBn68FQo3lH24gHKl15ceK4ktsALTqxdKPc/iMbQ442CGA==",
+    "MimeKit/3.6.0": {
+      "sha512": "R7WNYvUA+qn4PHt1rMaIUJ3nyloZ2SlWyLjnLfGm90kbMcU/4sYS2QSQMs1dWbtcts5B0CSfB5a2jB9fWX9DAQ==",
       "type": "package",
-      "path": "mimekit/3.5.0",
+      "path": "mimekit/3.6.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2586,7 +2586,7 @@
         "lib/netstandard2.1/MimeKit.dll",
         "lib/netstandard2.1/MimeKit.pdb",
         "lib/netstandard2.1/MimeKit.xml",
-        "mimekit.3.5.0.nupkg.sha512",
+        "mimekit.3.6.0.nupkg.sha512",
         "mimekit.nuspec"
       ]
     },
@@ -4121,7 +4121,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "MailKit >= 3.5.0",
+      "MailKit >= 3.6.0",
       "Microsoft.EntityFrameworkCore >= 7.0.3",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.3",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.3",
@@ -4169,7 +4169,7 @@
         "dependencies": {
           "MailKit": {
             "target": "Package",
-            "version": "[3.5.0, )"
+            "version": "[3.6.0, )"
           },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",

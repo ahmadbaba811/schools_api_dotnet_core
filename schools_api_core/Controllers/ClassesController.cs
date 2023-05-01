@@ -90,5 +90,16 @@ namespace schools_api_core.Controllers
         }
 
 
+
+        //GET FORM MASTER CLASS
+        [HttpPost("student-list/{class_id}")]
+        public async Task<IActionResult> GetFormMasterClasses(string staff_id, TblFormMaster fm)
+        {
+            var student = await _context.TblFormMasters.Where(x => x.StaffId == staff_id && x.SessionId == fm.SessionId).ToListAsync();
+            return Ok(student);
+        }
+
+
+
     }
 }

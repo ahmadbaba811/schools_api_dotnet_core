@@ -18,6 +18,19 @@ public partial class TblBehaviour
     [Unicode(false)]
     public string? BehaviorName { get; set; }
 
+    [Column("max_score", TypeName = "decimal(18, 2)")]
+    public decimal? MaxScore { get; set; }
+
+    [Column("term_id")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? TermId { get; set; }
+
+    [Column("session_id")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? SessionId { get; set; }
+
     [Column("added_by")]
     [StringLength(50)]
     [Unicode(false)]

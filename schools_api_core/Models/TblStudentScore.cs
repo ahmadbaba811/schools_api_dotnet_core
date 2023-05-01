@@ -39,7 +39,8 @@ public partial class TblStudentScore
     public string? ClassId { get; set; }
 
     [Column("class_name")]
-    [StringLength(10)]
+    [StringLength(50)]
+    [Unicode(false)]
     public string? ClassName { get; set; }
 
     [Column("term_id")]
@@ -48,7 +49,8 @@ public partial class TblStudentScore
     public string? TermId { get; set; }
 
     [Column("term_name")]
-    [StringLength(10)]
+    [StringLength(50)]
+    [Unicode(false)]
     public string? TermName { get; set; }
 
     [Column("session_id")]
@@ -57,7 +59,8 @@ public partial class TblStudentScore
     public string? SessionId { get; set; }
 
     [Column("session_name")]
-    [StringLength(10)]
+    [StringLength(50)]
+    [Unicode(false)]
     public string? SessionName { get; set; }
 
     [Column("ca_1")]
@@ -85,7 +88,7 @@ public partial class TblStudentScore
     [Unicode(false)]
     public string? Exam { get; set; }
 
-    [Column("total", TypeName = "decimal(5, 4)")]
+    [Column("total", TypeName = "decimal(10, 2)")]
     public decimal? Total { get; set; }
 
     [Column("grade")]

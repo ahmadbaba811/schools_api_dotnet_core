@@ -24,18 +24,33 @@ public partial class VwStudentResult
     [Unicode(false)]
     public string? ClassName { get; set; }
 
+    [Column("class_id")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? ClassId { get; set; }
+
     [Column("term_name")]
     [StringLength(50)]
     [Unicode(false)]
     public string? TermName { get; set; }
+
+    [Column("term_id")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? TermId { get; set; }
 
     [Column("session_name")]
     [StringLength(50)]
     [Unicode(false)]
     public string? SessionName { get; set; }
 
+    [Column("session_id")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? SessionId { get; set; }
+
     [Column("subject_name")]
-    [StringLength(150)]
+    [StringLength(50)]
     [Unicode(false)]
     public string? SubjectName { get; set; }
 
@@ -64,7 +79,7 @@ public partial class VwStudentResult
     [Unicode(false)]
     public string? Exam { get; set; }
 
-    [Column("total", TypeName = "decimal(5, 4)")]
+    [Column("total", TypeName = "decimal(10, 2)")]
     public decimal? Total { get; set; }
 
     [Column("grade")]
@@ -77,11 +92,14 @@ public partial class VwStudentResult
     [Unicode(false)]
     public string? Comment { get; set; }
 
-    [Column("subject_highest", TypeName = "decimal(5, 4)")]
+    [Column("subject_highest", TypeName = "decimal(10, 2)")]
     public decimal? SubjectHighest { get; set; }
 
-    [Column("subject_lowest", TypeName = "decimal(5, 4)")]
+    [Column("subject_lowest", TypeName = "decimal(10, 2)")]
     public decimal? SubjectLowest { get; set; }
+
+    [Column("subject_position")]
+    public long? SubjectPosition { get; set; }
 
     [Column("subject_average", TypeName = "decimal(38, 6)")]
     public decimal? SubjectAverage { get; set; }
@@ -89,19 +107,16 @@ public partial class VwStudentResult
     [Column("no_in_class")]
     public int? NoInClass { get; set; }
 
-    [Column("class_higest", TypeName = "decimal(38, 4)")]
+    [Column("class_higest", TypeName = "decimal(38, 2)")]
     public decimal? ClassHigest { get; set; }
 
-    [Column("class_lowest", TypeName = "decimal(38, 4)")]
+    [Column("class_lowest", TypeName = "decimal(38, 2)")]
     public decimal? ClassLowest { get; set; }
 
     [Column("class_average", TypeName = "decimal(38, 6)")]
     public decimal? ClassAverage { get; set; }
 
-    [Column("students_in_class")]
-    public int? StudentsInClass { get; set; }
-
-    [Column("grand_total", TypeName = "decimal(38, 4)")]
+    [Column("grand_total", TypeName = "decimal(38, 2)")]
     public decimal? GrandTotal { get; set; }
 
     [Column("student_average", TypeName = "decimal(38, 6)")]

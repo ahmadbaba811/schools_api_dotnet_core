@@ -44,6 +44,8 @@ public partial class schoolDbContext : DbContext
 
     public virtual DbSet<TblRole> TblRoles { get; set; }
 
+    public virtual DbSet<TblScoreSetting> TblScoreSettings { get; set; }
+
     public virtual DbSet<TblSession> TblSessions { get; set; }
 
     public virtual DbSet<TblStaff> TblStaffs { get; set; }
@@ -78,6 +80,8 @@ public partial class schoolDbContext : DbContext
 
     public virtual DbSet<VwSubjectMaxMin> VwSubjectMaxMins { get; set; }
 
+    public virtual DbSet<VwSubjectPosition> VwSubjectPositions { get; set; }
+
     public virtual DbSet<VwTest> VwTests { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -96,6 +100,9 @@ public partial class schoolDbContext : DbContext
         modelBuilder.Entity<TblBehaviour>(entity =>
         {
             entity.Property(e => e.DateAdded).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.MaxScore).HasDefaultValueSql("((0))");
+            entity.Property(e => e.SessionId).HasDefaultValueSql("((0))");
+            entity.Property(e => e.TermId).HasDefaultValueSql("((0))");
         });
 
         modelBuilder.Entity<TblChat>(entity =>
@@ -167,6 +174,11 @@ public partial class schoolDbContext : DbContext
             entity.Property(e => e.AddedDate).HasDefaultValueSql("(getdate())");
         });
 
+        modelBuilder.Entity<TblScoreSetting>(entity =>
+        {
+            entity.Property(e => e.AddedDate).HasDefaultValueSql("(getdate())");
+        });
+
         modelBuilder.Entity<TblSession>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_session");
@@ -207,10 +219,7 @@ public partial class schoolDbContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK_student_score");
 
-            entity.Property(e => e.ClassName).IsFixedLength();
             entity.Property(e => e.DateAdded).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.SessionName).IsFixedLength();
-            entity.Property(e => e.TermName).IsFixedLength();
         });
 
         modelBuilder.Entity<TblSubject>(entity =>
@@ -257,10 +266,6 @@ public partial class schoolDbContext : DbContext
         modelBuilder.Entity<VwPosition>(entity =>
         {
             entity.ToView("vw_position");
-
-            entity.Property(e => e.ClassName).IsFixedLength();
-            entity.Property(e => e.SessionName).IsFixedLength();
-            entity.Property(e => e.TermName).IsFixedLength();
         });
 
         modelBuilder.Entity<VwStudentResult>(entity =>
@@ -271,6 +276,8 @@ public partial class schoolDbContext : DbContext
         modelBuilder.Entity<VwStudentScore>(entity =>
         {
             entity.ToView("vw_student_scores");
+
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
         });
 
         modelBuilder.Entity<VwSubjectAverage>(entity =>
@@ -281,6 +288,11 @@ public partial class schoolDbContext : DbContext
         modelBuilder.Entity<VwSubjectMaxMin>(entity =>
         {
             entity.ToView("vw_subject_max_min");
+        });
+
+        modelBuilder.Entity<VwSubjectPosition>(entity =>
+        {
+            entity.ToView("vw_subject_position");
         });
 
         modelBuilder.Entity<VwTest>(entity =>

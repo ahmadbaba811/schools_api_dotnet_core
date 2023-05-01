@@ -118,6 +118,8 @@ namespace schools_api_core.Controllers
                 tt.EndDate = term.EndDate;
                 tt.Status = term.Status;
                 tt.AddedBy = term.AddedBy;
+                tt.AllowResultEntry = term.AllowResultEntry;
+                tt.ResultEntryEnds = term.ResultEntryEnds;
                 tt.DateAdded = Convert.ToDateTime(DateTime.Now);
                 await _context.SaveChangesAsync();
             }

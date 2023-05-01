@@ -24,9 +24,10 @@ namespace schools_api_core.Controllers
             return Ok(student);
         }
 
+        
         //GET ALL STUDENTS LIST BY CLASS ID
         [HttpGet("student-list/{class_id}")]
-        public async Task<IActionResult> GetByClassID(string class_id)
+        public async Task<IActionResult> GetStudentByClassID(string class_id)
         {
             var student = await _context.TblStudentBiodata.Where(x => x.ClassId == class_id ).ToListAsync();
             return Ok(student);

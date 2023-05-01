@@ -77,5 +77,58 @@ namespace schools_api_core.Controllers
             return Ok("updated");
         }
 
+
+        //GET SCORE SETTINGS
+        [HttpGet("scores-settings-list")]
+        public async Task<IActionResult> GetScoreSettings()
+        {
+            var scores = await _context.TblScoreSettings.ToListAsync();
+            return Ok(scores);
+        }
+
+        //GET SCORE SETTINGS BY TERM AND SESSION ID
+        [HttpGet("scores-settings-list/{term_id}/{session_id}")]
+        public async Task<IEnumerable<TblScoreSetting>> GetScoreSettingsByTermAndSession(string term_id, string session_id)
+        {
+            var scores = await _context.TblScoreSettings.Where(x => x.TermId.ToString() == term_id && x.SessionId.ToString() == session_id).ToListAsync();
+            return scores;
+        }
+
+        //ADD SCORES  SETTING
+        [HttpPost("add-scores-setting")]
+        public async Task<IActionResult> CreateScoreSetting(TblScoreSetting score)
+        {
+            var scoreToAdd = await _context.TblScoreSettings.Where(x => x.TermId == score.TermId && x.SessionId == score.SessionId).FirstOrDefaultAsync();
+            if (scoreToAdd != null) return BadRequest("score setting exists");
+
+            await _context.TblScoreSettings.AddAsync(score);
+            await _context.SaveChangesAsync();
+
+            return Ok("success");
+        }
+
+
+        //UPDATE SCORE SETTING
+        [HttpPut("update-score-settings/{id}")]
+        public async Task<IActionResult> UpdateScoreSetting(int id, TblScoreSetting score)
+        {
+            var tt = await _context.TblScoreSettings.FindAsync(id);
+            if (tt == null) return BadRequest("no record");
+
+            if (tt != null)
+            {
+                tt.SessionId = score.SessionId;
+                tt.TermId = score.TermId;
+                tt.Ca1 = score.Ca1;
+                tt.Ca2 = score.Ca2;
+                tt.Test1 = score.Test1;
+                tt.Test2 = score.Test2; 
+                tt.Exam = score.Exam;
+                await _context.SaveChangesAsync();
+            }
+            return Ok("success");
+        }
+
+
     }
 }

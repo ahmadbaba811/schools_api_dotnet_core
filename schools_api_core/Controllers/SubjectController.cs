@@ -94,17 +94,17 @@ namespace schools_api_core.Controllers
 
 
         //GET ALL SUBJECT GROUP
-        [HttpGet("subject-group-list")]
-        public async Task<IEnumerable<TblSubjectGroup>> GetSubjectGroup()
+        [HttpGet("running-subject-list/{session_id}")]
+        public async Task<IEnumerable<TblSubjectGroup>> GetSubjectGroup(string session_id)
         {
-            return await _context.TblSubjectGroups.ToListAsync();
+            return await _context.TblSubjectGroups.Where(x => x.SessionId == session_id).ToListAsync();
         }
 
         //GET ALL SUBJECT GROUP BY GROUPCODE
-        [HttpGet("subject-group-by-code/{group_code}")]
-        public async Task<IActionResult> GetSubjectGroupByCode(string group_code)
+        [HttpGet("subject-group-by-code/{group_code}/{session_id}")]
+        public async Task<IActionResult> GetSubjectGroupByCode(string group_code, string session_id)
         {
-            var subject_group = await _context.TblSubjectGroups.Where(x => x.GroupCode == group_code).ToListAsync();
+            var subject_group = await _context.TblSubjectGroups.Where(x => x.GroupCode == group_code && x.SessionId == session_id).ToListAsync();
             if (subject_group == null) return BadRequest("no record");
             return Ok(subject_group);
         }
@@ -123,7 +123,7 @@ namespace schools_api_core.Controllers
         [HttpPost("add-subject-group")]
         public async Task<IActionResult> CreateSubjectGroup(TblSubjectGroup subject)
         {
-            var exisitingSubjectGroup = _context.TblSubjectGroups.Where(x => x.SubjectName == subject.SubjectName && x.GroupCode == subject.GroupCode).FirstOrDefault();
+            var exisitingSubjectGroup = _context.TblSubjectGroups.Where(x => x.SubjectName == subject.SubjectName && x.GroupCode == subject.GroupCode && x.SessionId == subject.SessionId).FirstOrDefault();
             if (exisitingSubjectGroup != null) return BadRequest("subject exists in the group already");
 
             await _context.TblSubjectGroups.AddAsync(subject);

@@ -38,13 +38,20 @@ public partial class TblStudentBehavior
     [Unicode(false)]
     public string? Behaviour { get; set; }
 
+    [Column("behavior_id")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? BehaviorId { get; set; }
+
     [Column("score")]
     [StringLength(50)]
     [Unicode(false)]
     public string? Score { get; set; }
 
-    [Column("date_added", TypeName = "datetime")]
-    public DateTime? DateAdded { get; set; }
+    [Column("date_added")]
+    [StringLength(150)]
+    [Unicode(false)]
+    public string? DateAdded { get; set; }
 
     [Column("added_by")]
     [StringLength(50)]

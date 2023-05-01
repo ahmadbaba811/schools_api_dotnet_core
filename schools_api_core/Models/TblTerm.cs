@@ -36,4 +36,12 @@ public partial class TblTerm
 
     [Column("date_added", TypeName = "datetime")]
     public DateTime? DateAdded { get; set; }
+
+    [Column("allow_result_entry")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? AllowResultEntry { get; set; }
+
+    [Column("result_entry_ends", TypeName = "datetime")]
+    public DateTime? ResultEntryEnds { get; set; }
 }

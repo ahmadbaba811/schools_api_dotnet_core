@@ -189,11 +189,19 @@ namespace schools_api_core.Controllers
         }
 
 
-        //ALL SUBJECT TEACHERS LIST
+        //SUBJECT TEACHERS ASSIGNMENT BY STAFF ID
         [HttpGet("subject-teachers/list/{staff_id}")]
         public async Task<IActionResult> GetSubjectTeachersByStaffID(string staff_id)
         {
             var teachers = await _context.TblAssignTeachers.Where(x => x.StaffId == staff_id).ToListAsync();
+            return Ok(teachers);
+        }
+
+        //SUBJECT TEACHERS ASSIGNMENT BY STAFF ID
+        [HttpGet("subject-teachers/{staff_id}/{term_id}/{session_id}")]
+        public async Task<IActionResult> GetSubjectTeachersByStaffIDAndSession(string staff_id, string term_id, string session_id)
+        {
+            var teachers = await _context.TblAssignTeachers.Where(x => x.StaffId == staff_id && x.TermId == term_id && x.SessionId == session_id).ToListAsync();
             return Ok(teachers);
         }
 

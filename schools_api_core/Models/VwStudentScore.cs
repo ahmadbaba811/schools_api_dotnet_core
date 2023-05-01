@@ -47,7 +47,7 @@ public partial class VwStudentScore
     [Unicode(false)]
     public string? Exam { get; set; }
 
-    [Column("total", TypeName = "decimal(5, 4)")]
+    [Column("total", TypeName = "decimal(10, 2)")]
     public decimal? Total { get; set; }
 
     [Column("grade")]
@@ -66,7 +66,7 @@ public partial class VwStudentScore
     public string? SubjectId { get; set; }
 
     [Column("subject_name")]
-    [StringLength(150)]
+    [StringLength(50)]
     [Unicode(false)]
     public string? SubjectName { get; set; }
 
